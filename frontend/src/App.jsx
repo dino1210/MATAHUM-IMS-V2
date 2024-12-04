@@ -19,6 +19,7 @@ import Products from "./pages/Products";
 import Sales from "./pages/Sales";
 import Reports from "./pages/Reports";
 import Help from "./pages/Help";
+import Setting from "./pages/Setting"
 
 
 export default function App() {
@@ -36,7 +37,7 @@ export default function App() {
             <SidebarItem icon={<Receipt size={20} />} text="Sales" path="/sales" />
             <SidebarItem icon={<FileChartColumn size={20} />} text="Reports" path="/reports" />
             <hr className="my-3" />
-            <SidebarItem icon={<Settings size={20} />} text="Settings" path="/settings" />
+            <SidebarItem icon={<Settings size={20} />} text="Setting" path="/setting" />
             <SidebarItem icon={<LifeBuoy size={20} />} text="Help" path="/help" />
           </Sidebar>
 
@@ -47,10 +48,10 @@ export default function App() {
               <Route path="/user-management" element={<UserManagement />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/statistics" element={<Statistics />} />
-              <Route path="/products" element={<Products />} />
+              <Route path="/products/*" element={<Products />} />
               <Route path="/sales" element={<Sales />} />
               <Route path="/reports" element={<Reports />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/setting" element={<Setting />} />
               <Route path="/help" element={<Help />} />
             </Routes>
           </main>
