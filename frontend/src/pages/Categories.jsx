@@ -1,83 +1,97 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { Search } from "lucide-react";
+import Modal from "../components/Modal";
+import axios from "axios";
 
 const Categories = () => {
-  // Sample data for categories
-  const [categories, setCategories] = useState([
-    { id: 1, name: 'Tools' },
-    { id: 2, name: 'Equipment' },
-    { id: 3, name: 'Consumables' },
-  ]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [newCategoryDescription, setNewCategoryDescription] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // State for the new category input
-  const [newCategory, setNewCategory] = useState('');
-
-  // Handle the input change for new category
-  const handleChange = (e) => {
-    setNewCategory(e.target.value);
+  // Fetch categories from backend
+  const getCategories = () => {
+    axios
+      .get("http://localhost:5000/categories")
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
   };
 
-  // Add new category
-  const handleAddCategory = (e) => {
-    e.preventDefault();
-    if (newCategory.trim() !== '') {
-      const newId = categories.length + 1;
-      setCategories([...categories, { id: newId, name: newCategory }]);
-      setNewCategory(''); // Reset the input field
-    }
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  // Add a new category
+  const addCategory = (event) => {
+    event.preventDefault();
+
+    const newCategory = {
+      name: newCategoryName,
+      description: newCategoryDescription,
+    };
+
+    axios
+      .post("http://localhost:5000/categories", newCategory)
+      .then(() => {
+        getCategories(); // Refresh the categories list
+        setNewCategoryName("");
+        setNewCategoryDescription("");
+        setIsModalOpen(false);
+      })
+      .catch((error) => {
+        console.error("Error adding category:", error);
+      });
   };
 
-  // Delete category
-  const handleDeleteCategory = (id) => {
-    setCategories(categories.filter((category) => category.id !== id));
-  };
+  // Filter categories based on search term
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div>
-      <h1 className="text-xl font-semibold mb-8">Category Management</h1>
-
-      {/* Add New Category Form */}
-      <div className="mb-8 bg-white rounded-lg p-10">
-        <h2 className="text-sm font-medium mb-4">Add New Category</h2>
-        <form onSubmit={handleAddCategory} className="space-y-4">
-          <div>
-            <label htmlFor="category" className="block text-sm font-semibold mb-2">Category Name</label>
-            <input
-              type="text"
-              id="category"
-              value={newCategory}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-md"
-              required
-            />
-          </div>
+    <div className="container mx-auto">
+      <div className="container bg-white rounded-lg p-5 shadow-md">
+        <div className="flex flex-wrap items-center space-x-2">
+          <Search className="text-gray-500" />
+          <input
+            type="text"
+            placeholder="Search categories..."
+            className="border border-gray-300 text-sm rounded-lg p-2 flex-grow"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
           <button
-            type="submit"
-            className="w-full bg-green-500 text-white text-xs p-2 rounded-md hover:bg-green-600"
+            onClick={() => setIsModalOpen(true)}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold text-xs py-3 px-4 rounded-lg"
           >
             Add Category
           </button>
-        </form>
+        </div>
       </div>
 
-      {/* Categories List Table */}
-      <div className="bg-white p-10 rounded-lg">
-        <h2 className="text-sm font-medium mb-4">Categories List</h2>
-        <table className="min-w-full table-auto border-collapse">
+      <div className="container bg-white rounded-lg shadow-md p-5 mt-3 mx-auto">
+        <table className="min-w-full table-auto text-xs text-gray-600">
           <thead>
             <tr>
-              <th className="px-4 py-2 border-b text-xs text-left">Category Name</th>
-              <th className="px-4 py-2 border-b text-xs text-left">Actions</th>
+              <th className="border-b px-4 py-2 text-left">ID</th>
+              <th className="border-b px-4 py-2 text-left">Category Name</th>
+              <th className="border-b px-4 py-2 text-left">Description</th>
+              <th className="border-b px-4 py-2 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {categories.map((category) => (
-              <tr key={category.id} className="hover:bg-gray-100">
-                <td className="px-4 text-xs py-2 border-b">{category.name}</td>
-                <td className="px-4 text-xs py-2 border-b">
-                  <button
-                    onClick={() => handleDeleteCategory(category.id)}
-                    className="text-red-500 hover:text-red-700"
-                  >
+            {filteredCategories.map((category) => (
+              <tr key={category.id}>
+                <td className="border-b px-4 py-2">{category.id}</td>
+                <td className="border-b px-4 py-2">{category.name}</td>
+                <td className="border-b px-4 py-2">{category.description}</td>
+                <td className="border-b px-4 py-2 text-center">
+                  <button className="text-red-500 hover:underline">
                     Delete
                   </button>
                 </td>
@@ -86,6 +100,53 @@ const Categories = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal for adding a category */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <h2 className="text-xs font-semibold mb-4">Add New Category</h2>
+        <form onSubmit={addCategory}>
+          <div className="mb-2">
+            <label className="text-xs font-medium text-gray-700">
+              Category Name
+            </label>
+            <input
+              type="text"
+              className="mt-1 block w-full border border-gray-300 p-2 rounded-md text-xs"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mb-2">
+            <label className="text-xs font-medium text-gray-700">
+              Description
+            </label>
+            <textarea
+              className="mt-1 block w-full border border-gray-300 p-2 rounded-md text-xs"
+              value={newCategoryDescription}
+              onChange={(e) => setNewCategoryDescription(e.target.value)}
+              required
+            ></textarea>
+          </div>
+
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              className="bg-gray-500 text-white text-xs py-2 px-4 rounded-md"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white text-xs py-2 px-4 rounded-md"
+            >
+              Add Category
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

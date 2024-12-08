@@ -42,13 +42,13 @@ export default function App() {
           </Sidebar>
 
           {/* Main Content */}
-          <main className="flex-1 bg-gray-100 p-6 overflow-auto">
+          <main className="flex-1 bg-gray-100 p-4 overflow-auto">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/user-management" element={<UserManagement />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/statistics" element={<Statistics />} />
-              <Route path="/products/*" element={<Products />} />
+              <Route path="/products/" element={<Products />} />
               <Route path="/sales" element={<Sales />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/setting" element={<Setting />} />

@@ -1,7 +1,7 @@
 import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from '/src/assets/images/logo.png';
+import logo from "/src/assets/images/logo.png";
 
 const SidebarContext = createContext();
 
@@ -11,11 +11,12 @@ export default function Sidebar({ children }) {
   return (
     <aside className="h-screen">
       <nav className="h-full flex flex-col bg-white border-r shadow-sm">
-        {/* Logo and Toggle Button */}
         <div className="p-4 pb-2 flex justify-between items-center">
           <img
             src={logo}
-            className={`overflow-hidden transition-all ${expanded ? "w-10" : "w-0"}`}
+            className={`overflow-hidden transition-all ${
+              expanded ? "w-10" : "w-0"
+            }`}
             alt="Logo"
           />
           <button
@@ -46,7 +47,9 @@ export default function Sidebar({ children }) {
           >
             <div className="leading-4">
               <h4 className="font-semibold">Angelo Padilla</h4>
-              <span className="text-xs text-gray-600">angelo.padilla69@gmail.com</span>
+              <span className="text-xs text-gray-600">
+                angelo.padilla69@gmail.com
+              </span>
             </div>
             <MoreVertical size={20} />
           </div>
@@ -79,7 +82,9 @@ export function SidebarItem({ icon, text, path, alert }) {
       <Link to={path} className="flex items-center">
         {icon}
         <span
-          className={`overflow-hidden transition-all text-xs ${expanded ? "w-52 ml-3" : "w-0"}`}
+          className={`overflow-hidden transition-all text-xs ${
+            expanded ? "w-52 ml-3" : "w-0"
+          }`}
         >
           {text}
         </span>
