@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Search } from "lucide-react";
+import { Search, Edit, Trash2 } from "lucide-react";
 import Modal from "../components/Modal";
 import axios from "axios";
 
@@ -90,10 +90,15 @@ const Categories = () => {
                 <td className="border-b px-4 py-2">{category.id}</td>
                 <td className="border-b px-4 py-2">{category.name}</td>
                 <td className="border-b px-4 py-2">{category.description}</td>
-                <td className="border-b px-4 py-2 text-center">
-                  <button className="text-red-500 hover:underline">
-                    Delete
-                  </button>
+                <td className="border-b px-4 py-2 text-center space-x-1">
+                  <Edit
+                    className="text-blue-500 cursor-pointer inline-block w-auto h-5"
+                    onClick={() => openModal("edit", product)}
+                  />
+                  <Trash2
+                    className="text-red-500 cursor-pointer inline-block w-auto h-5"
+                    onClick={() => openModal("delete", product)}
+                  />
                 </td>
               </tr>
             ))}
