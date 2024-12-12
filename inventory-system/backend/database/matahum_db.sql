@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2024 at 01:08 PM
+-- Generation Time: Dec 13, 2024 at 12:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,10 +38,9 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `description`) VALUES
-(1, 'Ordinary Rice', 'Pang-mahirap'),
-(2, 'Fancy Rice', 'Pang may kaya'),
-(3, 'Special Rice', 'Pang-mayaman'),
-(4, 'Nigga Rice', 'Nigga rice, black');
+(1, 'Ordinary Rice', 'Rice suitable for everyday meals, affordable and commonly consumed by those on a budget.\r\n\r\n'),
+(2, 'Fancy Rice', 'Premium rice, often chosen by those who prefer better quality, with a higher price point.'),
+(3, 'Special Rice', 'High-quality rice typically associated with special occasions, favored by the affluent.');
 
 -- --------------------------------------------------------
 
@@ -65,9 +64,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category`, `stocks`, `buying_price`, `selling_price`, `date`, `image`, `product_name`) VALUES
-(11, 'ergvdxcs', 4321, 5432, 5432, '2024-12-08 18:15:22', 'uploads/1733657553837-Messenger_creation_7F07DA59-C98F-43CC-8564-2C43D78A23B1.jpeg', 'Niggalicious'),
-(12, 'bvgfds', 5432, 543, 5432, '2024-12-08 18:15:49', 'uploads/1733652949717-Messenger_creation_7F07DA59-C98F-43CC-8564-2C43D78A23B1.jpeg', 'rgfed'),
-(13, 'Ordinary Rice', 1234, 1234, 1234, '2024-12-08 18:35:26', 'uploads/1733654126849-Messenger_creation_7F07DA59-C98F-43CC-8564-2C43D78A23B1.jpeg', 'Cherry Tree');
+(18, 'Ordinary Rice', 1000, 40, 50, '2024-12-13 07:39:40', 'uploads/1734046780485-[Cherry Tree] [Ordinary Rice] [5 Kilo Sack].png', 'Cherry Tree'),
+(19, 'Ordinary Rice', 1000, 38, 42, '2024-12-13 07:40:52', 'uploads/1734046852600-[Green Mango] [Ordinary Rice] [25 Kilos].png', 'Green Mango'),
+(20, 'Ordinary Rice', 1000, 48, 44, '2024-12-13 07:41:59', 'uploads/1734046919475-[Aromatic Broken Rice] [Ordinary Rice] [25 Kilos].png', 'Aromatic Broken Rice'),
+(21, 'Ordinary Rice', 1000, 57, 51, '2024-12-13 07:42:52', 'uploads/1734046972360-Golden Rice, Fancy Rice.png', 'Golden Rice'),
+(22, 'Fancy Rice', 1000, 59, 55, '2024-12-13 07:43:35', 'uploads/1734047015962-[Panda Rice] [Fancy Rice] [5 Kilo Sack].png', 'Panda Rice'),
+(23, 'Fancy Rice', 1000, 60, 55, '2024-12-13 07:44:29', 'uploads/1734047069692-[Jasmine Fragrant] [Fancy Rice] [5 Kilo Sack].png', 'Jasmine Fragrant');
 
 -- --------------------------------------------------------
 
@@ -89,7 +91,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `role`, `status`, `lastLogin`) VALUES
-(2, 'Angelo Padilla', 'Angelo', 'Admin', 'Active', '2024-12-08 11:27:56');
+(4, 'Angelo Padilla', 'Gelotzy', 'Admin', 'Active', '2024-12-12 23:45:06'),
+(5, 'Ronald Esralon', 'Asset', 'Editor', 'Active', '2024-12-12 23:47:37'),
+(6, 'Nolly Alvarado', 'HAHAHAHA', 'Admin', 'Active', '2024-12-12 23:47:54'),
+(7, 'Edan Raymundo', 'Aydan', 'Viewer', 'Inactive', '2024-12-12 23:46:21'),
+(8, 'Jestro De Castro', 'Jizztro', 'Admin', 'Inactive', '2024-12-12 23:47:03');
 
 --
 -- Indexes for dumped tables
@@ -128,13 +134,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
